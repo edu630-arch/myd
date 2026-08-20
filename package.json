@@ -2,7 +2,6 @@
   "name": "ai-mind-diary",
   "version": "1.0.0",
   "description": "Google Gemini 생성형 AI 기반 마음 공감 일기 웹 애플리케이션",
-  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"
@@ -15,8 +14,5 @@
     "speech-recognition"
   ],
   "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "dotenv": "^16.4.5"
-  }
+  "license": "MIT"
 }
