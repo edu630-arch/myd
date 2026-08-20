@@ -23,7 +23,7 @@
     :root {
       /* 부드러운 배경 및 메인 컬러 */
       --bg-gradient: linear-gradient(135deg, #FFF6F0 0%, #F5F0FF 50%, #EBF4FF 100%);
-      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-bg: rgba(255, 255, 255, 0.94);
       --card-border: rgba(255, 255, 255, 0.95);
       
       /* 글자 색상 */
@@ -35,11 +35,8 @@
       --primary-color: #8A70D6;        /* 파스텔 라벤더 (Gemini 분석 버튼) */
       --primary-hover: #785dc7;
       --accent-coral: #FF8E72;         /* 파스텔 코랄 (음성 버튼) */
-      --accent-coral-hover: #f07b5e;
       --accent-green: #48BB78;         /* 파스텔 그린 (저장 버튼) */
       --accent-green-hover: #38a169;
-      --accent-gray: #718096;          /* 파스텔 슬레이트 (새로만들기 버튼) */
-      --accent-gray-hover: #4a5568;
       --recording-red: #FF5A5A;        /* 녹음 중 강조 레드 */
       
       /* 안내 박스 및 컴포넌트 색상 */
@@ -72,7 +69,6 @@
 
     /* ==========================================================================
        [2. 메인 컨테이너 및 카드 레이아웃]
-       화면 중앙에 배치되는 포근한 유리 카드(Glassmorphism) 스타일입니다.
        ========================================================================== */
     .app-container {
       width: 100%;
@@ -84,16 +80,24 @@
       border-radius: var(--radius-lg);
       padding: 36px 32px;
       box-shadow: var(--shadow-soft);
-      transition: transform 0.3s ease;
+      position: relative;
     }
 
     /* 헤더 타이틀 영역 */
     .header {
       text-align: center;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
+      position: relative;
     }
 
-    .header .sub-badge {
+    .top-action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .sub-badge {
       display: inline-flex;
       align-items: center;
       gap: 5px;
@@ -103,7 +107,27 @@
       font-size: 0.85rem;
       font-weight: 600;
       border-radius: 20px;
-      margin-bottom: 12px;
+    }
+
+    .btn-api-setting {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      color: #64748B;
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-api-setting:hover {
+      background: #F1F5F9;
+      color: var(--primary-color);
+      border-color: var(--primary-color);
     }
 
     .header h1 {
@@ -122,7 +146,6 @@
 
     /* ==========================================================================
        [3. 일기 입력창 영역 (Textarea)]
-       사용자가 여러 줄을 편안하게 입력할 수 있는 넓은 입력창입니다.
        ========================================================================== */
     .input-wrapper {
       position: relative;
@@ -156,7 +179,6 @@
       line-height: 1.6;
     }
 
-    /* 입력창 하단 정보 (글자 수 및 실시간 녹음 상태 안내) */
     .input-info-bar {
       display: flex;
       justify-content: space-between;
@@ -195,8 +217,7 @@
     }
 
     /* ==========================================================================
-       [4. 버튼 컨트롤 영역 (2x2 그리드)]
-       음성 입력, Gemini 분석, 새로 만들기, 저장하기 4개 버튼의 레이아웃입니다.
+       [4. 버튼 컨트롤 영역]
        ========================================================================== */
     .button-group {
       display: grid;
@@ -242,12 +263,6 @@
       color: #FFFFFF;
       border-color: var(--recording-red);
       box-shadow: 0 0 16px rgba(255, 90, 90, 0.45);
-      animation: recording-glow 1.5s infinite alternate;
-    }
-
-    @keyframes recording-glow {
-      0% { box-shadow: 0 0 8px rgba(255, 90, 90, 0.4); }
-      100% { box-shadow: 0 0 18px rgba(255, 90, 90, 0.75); }
     }
 
     /* ✨ 2) Gemini AI 분석 요청 버튼 */
@@ -305,7 +320,6 @@
 
     /* ==========================================================================
        [5. AI 답변 박스 영역]
-       화면 가장 아래에 위치하며, 회색 배경의 안내 박스 형태를 띱니다.
        ========================================================================== */
     .ai-response-section {
       border-top: 1px dashed #E5E8EB;
@@ -327,7 +341,6 @@
       color: var(--primary-color);
     }
 
-    /* AI 분석 결과 박스 */
     .ai-box {
       min-height: 120px;
       background-color: var(--box-bg);
@@ -342,7 +355,6 @@
       overflow: hidden;
     }
 
-    /* 기본 상태 문구 */
     .ai-placeholder-text {
       color: var(--text-muted);
       font-size: 0.95rem;
@@ -350,7 +362,6 @@
       display: block;
     }
 
-    /* 로딩 중 상태 */
     .ai-loading-container {
       display: none;
       flex-direction: column;
@@ -379,7 +390,6 @@
       font-weight: 600;
     }
 
-    /* 분석 결과 표시 상태 */
     .ai-result-container {
       display: none;
       animation: fadeIn 0.4s ease-in-out forwards;
@@ -438,7 +448,7 @@
     }
 
     /* ==========================================================================
-       [6. 최근 저장된 일기 목록 영역 (Firebase 데이터 실시간 확인)]
+       [6. 최근 저장된 일기 목록 영역]
        ========================================================================== */
     .saved-list-section {
       border-top: 1px solid #E5E8EB;
@@ -541,17 +551,20 @@
       bottom: 24px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: rgba(45, 55, 72, 0.94);
+      background: rgba(45, 55, 72, 0.96);
       color: #FFFFFF;
-      padding: 12px 24px;
+      padding: 14px 24px;
       border-radius: 30px;
       font-size: 0.9rem;
       font-weight: 500;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
       opacity: 0;
       pointer-events: none;
-      z-index: 999;
+      z-index: 9999;
+      max-width: 90%;
+      text-align: center;
+      line-height: 1.4;
     }
 
     .toast-message.show {
@@ -560,29 +573,131 @@
     }
 
     /* ==========================================================================
-       [7. 반응형 모바일 스타일]
+       [7. API Key 설정 모달 팝업]
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.open .modal-card {
+      transform: scale(1);
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .modal-desc {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .api-key-input {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      border: 1.5px solid #E2E8F0;
+      border-radius: var(--radius-sm);
+      outline: none;
+      margin-bottom: 12px;
+      font-family: monospace;
+    }
+
+    .api-key-input:focus {
+      border-color: var(--primary-color);
+    }
+
+    .modal-help-box {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 0.82rem;
+      color: #475569;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .modal-help-box a {
+      color: var(--primary-color);
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    .modal-btn-group {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn-modal-cancel {
+      background: #F1F5F9;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #64748B;
+      cursor: pointer;
+    }
+
+    .btn-modal-save {
+      background: var(--primary-color);
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       [8. 반응형 스타일]
        ========================================================================== */
     @media (max-width: 480px) {
       .app-container {
         padding: 24px 20px;
-        border-radius: var(--radius-md);
       }
-
       .header h1 {
         font-size: 1.5rem;
       }
-
       .button-group {
         grid-template-columns: 1fr;
-      }
-
-      .btn {
-        padding: 12px 16px;
-        font-size: 0.92rem;
-      }
-
-      .ai-box {
-        padding: 18px 16px;
       }
     }
   </style>
@@ -592,9 +707,14 @@
   <!-- 전체 애플리케이션 카드 -->
   <main class="app-container">
     
-    <!-- 1. 메인 헤더 영역 -->
+    <!-- 1. 상단 바 & 메인 헤더 영역 -->
     <header class="header">
-      <span class="sub-badge">✨ Google Gemini AI 마음 일기</span>
+      <div class="top-action-bar">
+        <span class="sub-badge">✨ Google Gemini AI 마음 일기</span>
+        <button type="button" id="openApiKeyModalBtn" class="btn-api-setting" title="구글 Gemini API 키 변경 및 확인">
+          ⚙️ API 키 설정
+        </button>
+      </div>
       <h1>오늘의 하루는 어땠나요?</h1>
       <p>마음속에 머물던 이야기들을 편안하게 기록하고 AI의 따뜻한 위로를 받아보세요.</p>
     </header>
@@ -617,7 +737,7 @@
       </div>
     </section>
 
-    <!-- 3. 버튼 영역 (2x2 그리드: 음성/Gemini 분석/새로만들기/저장) -->
+    <!-- 3. 버튼 영역 -->
     <section class="button-group">
       <!-- 🎙️ 1. 음성 입력 버튼 -->
       <button type="button" id="voiceBtn" class="btn btn-voice" title="마이크를 켜서 음성으로 일기를 작성합니다.">
@@ -650,18 +770,14 @@
         <span class="ai-icon">💬</span> AI의 답변
       </h2>
       
-      <!-- AI 결과 박스 -->
       <div id="aiResponseBox" class="ai-box">
-        <!-- 상태 1: 기본 초기 안내 문구 -->
         <p id="aiPlaceholder" class="ai-placeholder-text">여기에 Gemini AI의 답변이 표시됩니다.</p>
 
-        <!-- 상태 2: 감정 분석 진행 중 로딩 애니메이션 -->
         <div id="aiLoading" class="ai-loading-container">
           <div class="loading-spinner"></div>
           <p class="loading-text">Gemini AI가 마음의 온도를 깊이 읽고 있어요... ✨</p>
         </div>
 
-        <!-- 상태 3: 감정 분석 결과 출력 -->
         <div id="aiResult" class="ai-result-container">
           <div class="result-emotion-header">
             <span id="emotionEmoji" class="emotion-emoji-badge">🌿</span>
@@ -675,7 +791,7 @@
       </div>
     </section>
 
-    <!-- 5. 최근 저장된 일기 목록 영역 (Firebase 연동 확인용) -->
+    <!-- 5. 최근 저장된 일기 목록 영역 -->
     <section class="saved-list-section">
       <div class="saved-list-header">
         <span class="saved-list-title">📂 최근 저장된 일기 기록</span>
@@ -690,26 +806,54 @@
 
   </main>
 
-  <!-- 토스트 알림 (경고/안내 팝업용) -->
+  <!-- 6. API Key 설정 팝업 모달 -->
+  <div id="apiKeyModal" class="modal-overlay">
+    <div class="modal-card">
+      <h3 class="modal-title">🔑 Google Gemini API 키 설정</h3>
+      <p class="modal-desc">구글 AI 스튜디오에서 발급받은 API 키를 입력하시면 실시간 생성형 AI 맞춤 분석을 사용할 수 있습니다.</p>
+      
+      <input type="text" id="modalApiKeyInput" class="api-key-input" placeholder="AIzaSy... 또는 발급받은 API 키 입력" />
+      
+      <div class="modal-help-box">
+        💡 <strong>무료 API 키 발급 방법 (1분):</strong><br/>
+        1. <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio (클릭)</a> 에 접속합니다.<br/>
+        2. <strong>'Create API key'</strong> 버튼을 클릭하여 새 키를 발급받으세요.<br/>
+        3. 발급받은 키를 여기에 붙여넣고 저장하면 즉시 적용됩니다!
+      </div>
+
+      <div class="modal-btn-group">
+        <button type="button" id="closeApiKeyModalBtn" class="btn-modal-cancel">취소</button>
+        <button type="button" id="saveApiKeyBtn" class="btn-modal-save">저장하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 토스트 알림 메시지 -->
   <div id="toastMessage" class="toast-message">일기 내용을 먼저 입력해주세요!</div>
 
   <!-- ==========================================================================
-       [8. 자바스크립트 기능 로직]
-       1) Firebase 초기화 및 Firestore 연동
-       2) Web Speech API 실시간 음성 인식
-       3) Google Gemini 3.6-Flash API 직접 연동 & 타이핑 효과
-       4) 새로 만들기 및 Firebase 저장/불러오기 처리
+       [7. 자바스크립트 로직]
        ========================================================================== -->
   <script>
     /* --------------------------------------------------------------------------
-       [A. Google Gemini API 설정]
-       구글 Gemini 생성형 AI API 키입니다.
+       [A. Gemini API 키 관리 (기본값 및 로컬스토리지 저장 지원)]
        -------------------------------------------------------------------------- */
-    const GEMINI_API_KEY = "AQ.Ab8RN6IPJuu-o6Avt9UFvu7x7DwgZLRSs41aCwZxRPvGYIT8Tg";
+    const DEFAULT_GEMINI_API_KEY = "AQ.Ab8RN6IPJuu-o6Avt9UFvu7x7DwgZLRSs41aCwZxRPvGYIT8Tg";
+
+    function getActiveGeminiApiKey() {
+      return localStorage.getItem('user_gemini_api_key') || DEFAULT_GEMINI_API_KEY;
+    }
+
+    function setActiveGeminiApiKey(key) {
+      if (key && key.trim()) {
+        localStorage.setItem('user_gemini_api_key', key.trim());
+      } else {
+        localStorage.removeItem('user_gemini_api_key');
+      }
+    }
 
     /* --------------------------------------------------------------------------
        [B. Firebase 초기화 및 Firestore DB 객체 생성]
-       사용자 제공 파이어베이스 설정값입니다.
        -------------------------------------------------------------------------- */
     const firebaseConfig = {
       apiKey: "AIzaSyBzIX99WprfJm7uav0c4KzLGOgZhzMeYzU",
@@ -758,7 +902,13 @@
     const savedItemsContainer = document.getElementById('savedItemsContainer');
     const refreshListBtn = document.getElementById('refreshListBtn');
 
-    // 현재 Gemini 분석 결과 상태 변수
+    // 모달 엘리먼트
+    const openApiKeyModalBtn = document.getElementById('openApiKeyModalBtn');
+    const closeApiKeyModalBtn = document.getElementById('closeApiKeyModalBtn');
+    const saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
+    const apiKeyModal = document.getElementById('apiKeyModal');
+    const modalApiKeyInput = document.getElementById('modalApiKeyInput');
+
     let currentAnalysisResult = null;
 
     /* --------------------------------------------------------------------------
@@ -780,11 +930,31 @@
       if (toastTimeout) clearTimeout(toastTimeout);
       toastTimeout = setTimeout(() => {
         toastMessage.classList.remove('show');
-      }, 3000);
+      }, 4500);
     }
 
     /* --------------------------------------------------------------------------
-       [F. Web Speech API 음성 인식 구현]
+       [F. API Key 모달 제어]
+       -------------------------------------------------------------------------- */
+    openApiKeyModalBtn.addEventListener('click', () => {
+      modalApiKeyInput.value = getActiveGeminiApiKey();
+      apiKeyModal.classList.add('open');
+      modalApiKeyInput.focus();
+    });
+
+    closeApiKeyModalBtn.addEventListener('click', () => {
+      apiKeyModal.classList.remove('open');
+    });
+
+    saveApiKeyBtn.addEventListener('click', () => {
+      const newKey = modalApiKeyInput.value.trim();
+      setActiveGeminiApiKey(newKey);
+      apiKeyModal.classList.remove('open');
+      showToast('API 키가 안전하게 저장되었습니다! ✨');
+    });
+
+    /* --------------------------------------------------------------------------
+       [G. Web Speech API 음성 인식]
        -------------------------------------------------------------------------- */
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let recognition = null;
@@ -815,22 +985,16 @@
       };
 
       recognition.onend = () => {
-        if (isRecording) {
-          stopRecording();
-        }
+        if (isRecording) stopRecording();
       };
 
       recognition.onerror = (event) => {
         console.error('음성 인식 오류:', event.error);
         if (event.error === 'not-allowed') {
-          showToast('마이크 사용 권한이 차단되었습니다. 브라우저 주소창 왼쪽 자물쇠 아이콘에서 허용해주세요.');
-        } else if (event.error !== 'no-speech') {
-          showToast('음성 인식 중 문제가 발생했습니다.');
+          showToast('마이크 사용 권한이 차단되었습니다. 브라우저 설정에서 마이크를 허용해주세요.');
         }
         stopRecording();
       };
-    } else {
-      voiceBtn.title = '현재 브라우저는 음성 인식을 지원하지 않습니다. (Chrome 권장)';
     }
 
     function startRecording() {
@@ -862,90 +1026,115 @@
     }
 
     voiceBtn.addEventListener('click', () => {
-      if (!isRecording) {
-        startRecording();
-      } else {
-        stopRecording();
-      }
+      if (!isRecording) startRecording();
+      else stopRecording();
     });
 
     /* --------------------------------------------------------------------------
-       [G. 백업용 스마트 로컬 감정 사전 (네트워크 문제 시 Fallback)]
+       [H. 다채로운 스마트 로컬 감정 사전 (오프라인/API 오류 시 Fallback)]
        -------------------------------------------------------------------------- */
-    const localFallbackDictionary = {
-      joy: {
-        name: '기쁨과 행복', emoji: '😃',
-        keywords: ['기쁘', '행복', '즐겁', '신나', '최고', '뿌듯', '웃음', '좋았', '성공', '해냈', '만족', '환상', '완벽', '보람'],
-        messages: ["오늘 하루 동안 마주한 행복한 순간들이 당신을 활짝 웃게 만들어 주었군요! ✨\n반짝이는 기쁨과 뿌듯함이 가득했던 오늘의 멋진 기억이 내일 하루를 살아갈 따뜻한 원동력이 되어줄 거예요.\n스스로를 아낌없이 칭찬해주며 기분 좋은 하루를 마무리해보세요!"]
+    const smartFallbackDictionary = [
+      {
+        key: 'joy', name: '기쁨과 성취', emoji: '😃',
+        keywords: ['기쁘', '행복', '즐겁', '신나', '최고', '뿌듯', '웃음', '좋았', '성공', '해냈', '만족', '환상', '완벽', '보람', '재미', '웃겨', '합격', '선물', '축하'],
+        messages: [
+          "오늘 하루 동안 마주한 행복한 순간들이 당신을 활짝 웃게 만들어 주었군요! ✨\n반짝이는 기쁨과 뿌듯함이 가득했던 오늘의 멋진 기억이 내일 하루를 살아갈 따뜻한 원동력이 되어줄 거예요.\n오늘 하루 열심히 빛난 당신을 아낌없이 칭찬해주세요!",
+          "마음 가득 벅찬 기쁨과 뿌듯함이 전해져와요! 🎉\n스스로 이루어낸 작은 성취들이 모여 당신을 더욱 단단하고 빛나게 만들어 줄 거예요.\n오늘 밤은 이 행복한 여운을 마음껏 만끽하며 편안히 쉬어가세요!"
+        ]
       },
-      sadness: {
-        name: '슬픔과 위로', emoji: '😢',
-        keywords: ['슬프', '눈물', '울었', '우울', '속상', '외로', '쓸쓸', '허전', '서운', '아프', '실패', '상처', '괴로', '집에 가고 싶', '집에 가고'],
-        messages: ["마음속에 무거운 슬픔과 속상함이 내려앉은 하루였군요. 마음껏 아파하고 털어내셔도 괜찮아요. 💧\n오늘 하루도 정말 애쓰셨고, 지금 느끼는 힘든 마음을 깊이 공감하고 안아드릴게요.\n오늘은 그 어떤 생각도 내려놓고, 당신의 지친 마음을 꼭 안아주세요."]
+      {
+        key: 'sadness', name: '슬픔과 위로', emoji: '😢',
+        keywords: ['슬프', '눈물', '울었', '우울', '속상', '외로', '쓸쓸', '허전', '서운', '아프', '실패', '상처', '괴로', '집에 가고 싶', '집에 가고', '눈물나', '마음이 아파'],
+        messages: [
+          "마음속에 무거운 슬픔과 속상함이 내려앉은 하루였군요. 마음껏 아파하고 털어내셔도 괜찮아요. 💧\n오늘 하루도 정말 애쓰셨고, 지금 느끼는 힘든 마음을 깊이 공감하고 안아드릴게요.\n오늘은 그 어떤 생각도 내려놓고, 당신의 지친 마음을 꼭 안아주세요.",
+          "흘러내린 눈물만큼 당신의 마음도 한 뼘 더 깊어지고 있어요. 🌧️\n비가 그치고 나면 반드시 맑고 투명한 하늘이 찾아오듯, 당신의 내일에도 따스한 햇살이 비출 거예요.\n당신 곁에서 언제나 묵묵히 응원할게요."
+        ]
       },
-      tiredness: {
-        name: '피로와 지침', emoji: '🥱',
-        keywords: ['피곤', '지치', '힘들', '졸려', '녹초', '방전', '쉬고 싶', '야근', '고단', '지쳤'],
-        messages: ["오늘 하루도 쉼 없이 달리느라 온몸의 에너지가 다 닳으셨군요. 정말 고생 많으셨어요. 🛌\n열심히 살아낸 당신에게 지금 가장 필요한 것은 온전한 휴식과 따뜻한 쉼자리입니다.\n오늘 밤만큼은 모든 걱정을 내려놓고 포근하고 깊은 휴식을 취해보세요."]
+      {
+        key: 'tiredness', name: '피로와 쉼', emoji: '🥱',
+        keywords: ['피곤', '지치', '힘들', '졸려', '녹초', '방전', '쉬고 싶', '야근', '고단', '지쳤', '기운 없', '체력'],
+        messages: [
+          "오늘 하루도 쉼 없이 달리느라 온몸의 에너지가 다 닳으셨군요. 정말 고생 많으셨어요. 🛌\n열심히 살아낸 당신에게 지금 가장 필요한 것은 온전한 휴식과 따뜻한 쉼자리입니다.\n오늘 밤만큼은 모든 걱정을 내려놓고 포근하고 깊은 잠에 들어보세요.",
+          "하루의 무게를 짊어지느라 지친 당신의 어깨를 토닥여드리고 싶어요. ☕\n잠시 멈추어 숨을 고르는 것은 결코 게으른 것이 아니라 내일을 위한 가장 지혜로운 준비랍니다.\n따뜻한 차 한 잔과 함께 편안한 쉼을 누려보세요."
+        ]
       },
-      peace: {
-        name: '평온과 여유', emoji: '🌿',
-        keywords: ['평온', '여유', '편안', '조용', '산책', '쉼', '잔잔', '따뜻', '힐링', '휴식', '무난'],
-        messages: ["잔잔하고 평온한 하루를 보내셨군요! 잔잔한 호수처럼 고요한 일상은 그 자체로 큰 축복이랍니다. 🍃\n이처럼 편안하고 여유로운 마음의 쉼표가 당신의 내일을 더욱 맑고 풍요롭게 만들어 줄 거예요."]
+      {
+        key: 'anger', name: '답답함과 분노', emoji: '😤',
+        keywords: ['화나', '짜증', '열받', '답답', '분노', '억울', '스트레스', '미치겠', '빡치', '어이없', '욕나'],
+        messages: [
+          "답답하고 화나는 일들 때문에 가슴속이 답답하게 끓어올랐던 하루였군요. 🗯️\n당신의 억울함과 속상한 마음에 깊이 공감해요. 그 부정적인 감정들은 일기장에 훌훌 털어버리세요.\n깊게 숨을 들이쉬고 내쉬며, 마음의 평정을 되찾아보세요."
+        ]
+      },
+      {
+        key: 'love', name: '사랑과 감사', emoji: '💖',
+        keywords: ['사랑', '감사', '고마', '따뜻', '설레', '소중', '다정', '행운', '좋아하', '애정'],
+        messages: [
+          "마음속에 따뜻한 사랑과 감사가 가득 넘쳐나는 아름다운 하루를 보내셨네요! 🌸\n주변을 둘러보고 소중한 사람들과 온기를 나누는 당신의 다정한 마음씨가 세상을 더 밝게 빛내고 있어요.\n이 온기가 오래도록 당신 곁에 머물기를 바라요!"
+        ]
       }
-    };
+    ];
 
     function fallbackAnalyze(text) {
-      for (const [key, val] of Object.entries(localFallbackDictionary)) {
-        if (val.keywords.some(k => text.includes(k))) {
+      for (const item of smartFallbackDictionary) {
+        if (item.keywords.some(k => text.includes(k))) {
+          const randomIndex = Math.floor(Math.random() * item.messages.length);
           return {
-            emotionKey: key,
-            emotionName: val.name,
-            emotionEmoji: val.emoji,
-            aiMessage: val.messages[0]
+            emotionKey: item.key,
+            emotionName: item.name,
+            emotionEmoji: item.emoji,
+            aiMessage: item.messages[randomIndex]
           };
         }
       }
       return {
         emotionKey: 'peace',
-        emotionName: '평온함',
+        emotionName: '평온과 여유',
         emotionEmoji: '🌿',
-        aiMessage: '오늘 하루도 정말 고생 많으셨어요. 따뜻한 차 한 잔과 함께 편안한 밤 보내세요! 🍃'
+        aiMessage: `오늘 하루도 당신만의 속도로 소중한 발걸음을 내딛으셨네요. 🍃\n잔잔한 호수처럼 평온한 일상은 그 자체로 큰 쉼과 회복을 선물합니다.\n편안하고 따뜻한 밤 보내세요!`
       };
     }
 
     /* --------------------------------------------------------------------------
-       [H. Google Gemini 생성형 AI 직접 호출 함수]
+       [I. Google Gemini 생성형 AI 직접 호출 함수]
        -------------------------------------------------------------------------- */
     async function requestGeminiAnalysis(diaryText) {
+      const apiKey = getActiveGeminiApiKey();
+
       const systemPrompt = `
-너는 일기를 읽고 사람들의 마음을 따뜻하게 안아주는 다정하고 지혜로운 AI 심리 상담사이자 친구야.
-사용자가 작성한 일기를 깊이 있게 읽고, 사용자의 감정을 섬세하게 분석하여 반드시 유효한 JSON 형식으로만 응답해.
+너는 일기를 읽고 사람들의 마음을 따뜻하게 안아주는 다정하고 지혜로운 AI 심리 상담사이자 가장 친한 친구야.
+사용자가 작성한 일기를 깊이 있게 읽고, 사용자가 겪은 구체적인 상황과 마음에 깊이 공감하여 감정을 섬세하게 분석해.
 
 [응답 규칙]
-1. emotionKey: "joy", "sadness", "anger", "tiredness", "peace", "love", "anxiety" 중 일기에 가장 잘 맞는 것 1개 선택
-2. emotionName: 일기의 감정을 나타내는 한국어 표현 (예: "기쁨과 행복", "슬픔과 위로", "답답함과 분노", "피로와 지침", "평온과 여유", "사랑과 감사", "불안과 걱정")
-3. emotionEmoji: 해당 감정에 가장 어울리는 단 하나의 이모지 (예: 😃, 😢, 😡, 🥱, 🌿, 💖, 😰)
-4. aiMessage: 일기 내용 속 구체적인 사건과 마음에 깊이 공감하고, 진심 어린 위로와 다정한 응원을 건네는 2~3줄의 문장 (한국어 존댓말, 줄바꿈 포함)
+1. emotionKey: "joy", "sadness", "anger", "tiredness", "peace", "love", "anxiety" 중 가장 잘 어울리는 것 1개
+2. emotionName: 일기의 감정을 나타내는 한국어 표현 (예: "기쁨과 성취", "슬픔과 위로", "답답함과 위로", "지친 하루의 쉼", "평온과 감사", "설렘과 사랑", "불안과 용기")
+3. emotionEmoji: 해당 감정에 딱 맞는 단 하나의 이모지 (예: 😃, 😢, 😤, 🥱, 🌿, 💖, 😰)
+4. aiMessage: 사용자가 일기에 적은 구체적인 일이나 마음을 직접 언급하며, 진심 어린 위로와 다정한 공감, 따뜻한 응원을 건네는 2~3줄의 다정한 문장 (한국어 존댓말, 줄바꿈 포함)
 
-[반드시 아래 JSON 포맷으로만 출력할 것 (마크다운 백틱 없이 순수 JSON만 반환)]:
+[반드시 아래 순수 JSON 포맷으로만 출력할 것]:
 {
-  "emotionKey": "선택한키",
+  "emotionKey": "key",
   "emotionName": "감정이름",
   "emotionEmoji": "이모지",
-  "aiMessage": "2~3줄의 따뜻한 응원/위로 메시지"
+  "aiMessage": "맞춤형 위로/응원 메시지"
 }
 `;
 
       const userPrompt = `사용자의 오늘 일기:\n"""\n${diaryText}\n"""`;
 
-      // 최신 Gemini 모델 우선 호출 (3.6-flash, 3.7-flash, flash-latest)
-      const modelsToTry = ['gemini-3.6-flash', 'gemini-3.7-flash', 'gemini-flash-latest'];
-      let lastError = null;
+      // 최신 Gemini 모델 우선 호출 리스트
+      const modelsToTry = [
+        'gemini-2.5-flash',
+        'gemini-2.0-flash',
+        'gemini-3.6-flash',
+        'gemini-flash-latest'
+      ];
+      
+      let lastErrorMessage = '';
+      let isAuthError = false;
 
       for (const modelName of modelsToTry) {
         try {
-          const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${GEMINI_API_KEY}`;
+          const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
 
           const response = await fetch(geminiUrl, {
             method: 'POST',
@@ -983,20 +1172,29 @@
               const parsed = JSON.parse(cleanJsonText);
               return {
                 emotionKey: parsed.emotionKey || 'peace',
-                emotionName: parsed.emotionName || '평온함',
+                emotionName: parsed.emotionName || '감정 분석',
                 emotionEmoji: parsed.emotionEmoji || '🌿',
                 aiMessage: parsed.aiMessage || '오늘 하루도 정말 고생 많으셨어요.'
               };
             }
           } else {
-            lastError = await response.text();
+            const errBody = await response.json().catch(() => ({}));
+            lastErrorMessage = errBody.error && errBody.error.message ? errBody.error.message : `HTTP ${response.status}`;
+            if (response.status === 401 || response.status === 403) {
+              isAuthError = true;
+              break;
+            }
           }
         } catch (err) {
-          lastError = err.message;
+          lastErrorMessage = err.message;
         }
       }
 
-      console.warn('Gemini API 직접 호출 실패, 로컬 백업 감정 분석 실행:', lastError);
+      if (isAuthError) {
+        showToast('⚠️ 구글 Gemini API 키 인증에 실패했습니다. 상단의 [⚙️ API 키 설정]에서 새 키를 등록해주세요!');
+      }
+
+      console.warn('Gemini API 호출 실패로 스마트 사전 실행:', lastErrorMessage);
       return fallbackAnalyze(diaryText);
     }
 
@@ -1015,7 +1213,7 @@
     }
 
     /* --------------------------------------------------------------------------
-       [I. '✨ AI 분석 요청하기' 버튼 이벤트]
+       [J. '✨ AI 분석 요청하기' 버튼 이벤트]
        -------------------------------------------------------------------------- */
     analyzeBtn.addEventListener('click', async () => {
       const text = diaryInput.value.trim();
@@ -1064,7 +1262,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       [J. '📝 새로 만들기' 버튼 이벤트]
+       [K. '📝 새로 만들기' 버튼 이벤트]
        -------------------------------------------------------------------------- */
     newBtn.addEventListener('click', () => {
       if (isRecording) stopRecording();
@@ -1087,7 +1285,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       [K. '💾 일기 저장하기' 버튼 이벤트 (Firebase Firestore 연동)]
+       [L. '💾 일기 저장하기' 버튼 이벤트 (Firebase Firestore 연동)]
        -------------------------------------------------------------------------- */
     saveBtn.addEventListener('click', async () => {
       const text = diaryInput.value.trim();
@@ -1172,7 +1370,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       [L. 저장된 일기 목록 불러오기]
+       [M. 저장된 일기 목록 불러오기]
        -------------------------------------------------------------------------- */
     async function loadRecentDiaries() {
       if (!db) return;
