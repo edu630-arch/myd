@@ -87,14 +87,6 @@
     .header {
       text-align: center;
       margin-bottom: 24px;
-      position: relative;
-    }
-
-    .top-action-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
     }
 
     .sub-badge {
@@ -107,27 +99,7 @@
       font-size: 0.85rem;
       font-weight: 600;
       border-radius: 20px;
-    }
-
-    .btn-api-setting {
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      color: #64748B;
-      cursor: pointer;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.2s;
-    }
-
-    .btn-api-setting:hover {
-      background: #F1F5F9;
-      color: var(--primary-color);
-      border-color: var(--primary-color);
+      margin-bottom: 12px;
     }
 
     .header h1 {
@@ -217,7 +189,7 @@
     }
 
     /* ==========================================================================
-       [4. 버튼 컨트롤 영역]
+       [4. 버튼 컨트롤 영역 (2x2 그리드)]
        ========================================================================== */
     .button-group {
       display: grid;
@@ -573,121 +545,7 @@
     }
 
     /* ==========================================================================
-       [7. API Key 설정 모달 팝업]
-       ========================================================================== */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.45);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .modal-overlay.open {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .modal-card {
-      background: #FFFFFF;
-      border-radius: var(--radius-lg);
-      padding: 28px 24px;
-      width: 100%;
-      max-width: 480px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      transform: scale(0.95);
-      transition: transform 0.3s ease;
-    }
-
-    .modal-overlay.open .modal-card {
-      transform: scale(1);
-    }
-
-    .modal-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 8px;
-    }
-
-    .modal-desc {
-      font-size: 0.88rem;
-      color: var(--text-sub);
-      line-height: 1.5;
-      margin-bottom: 18px;
-    }
-
-    .api-key-input {
-      width: 100%;
-      padding: 12px 14px;
-      font-size: 0.95rem;
-      border: 1.5px solid #E2E8F0;
-      border-radius: var(--radius-sm);
-      outline: none;
-      margin-bottom: 12px;
-      font-family: monospace;
-    }
-
-    .api-key-input:focus {
-      border-color: var(--primary-color);
-    }
-
-    .modal-help-box {
-      background: #F8FAFC;
-      border: 1px solid #E2E8F0;
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      font-size: 0.82rem;
-      color: #475569;
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
-
-    .modal-help-box a {
-      color: var(--primary-color);
-      font-weight: 600;
-      text-decoration: underline;
-    }
-
-    .modal-btn-group {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-    }
-
-    .btn-modal-cancel {
-      background: #F1F5F9;
-      border: none;
-      padding: 10px 18px;
-      border-radius: var(--radius-sm);
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #64748B;
-      cursor: pointer;
-    }
-
-    .btn-modal-save {
-      background: var(--primary-color);
-      border: none;
-      padding: 10px 20px;
-      border-radius: var(--radius-sm);
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #FFFFFF;
-      cursor: pointer;
-    }
-
-    /* ==========================================================================
-       [8. 반응형 스타일]
+       [7. 반응형 모바일 스타일]
        ========================================================================== */
     @media (max-width: 480px) {
       .app-container {
@@ -707,14 +565,9 @@
   <!-- 전체 애플리케이션 카드 -->
   <main class="app-container">
     
-    <!-- 1. 상단 바 & 메인 헤더 영역 -->
+    <!-- 1. 메인 헤더 영역 -->
     <header class="header">
-      <div class="top-action-bar">
-        <span class="sub-badge">✨ Google Gemini AI 마음 일기</span>
-        <button type="button" id="openApiKeyModalBtn" class="btn-api-setting" title="구글 Gemini API 키 변경 및 확인">
-          ⚙️ API 키 설정
-        </button>
-      </div>
+      <span class="sub-badge">✨ Google Gemini AI 마음 일기</span>
       <h1>오늘의 하루는 어땠나요?</h1>
       <p>마음속에 머물던 이야기들을 편안하게 기록하고 AI의 따뜻한 위로를 받아보세요.</p>
     </header>
@@ -737,7 +590,7 @@
       </div>
     </section>
 
-    <!-- 3. 버튼 영역 -->
+    <!-- 3. 버튼 영역 (2x2 그리드) -->
     <section class="button-group">
       <!-- 🎙️ 1. 음성 입력 버튼 -->
       <button type="button" id="voiceBtn" class="btn btn-voice" title="마이크를 켜서 음성으로 일기를 작성합니다.">
@@ -806,51 +659,18 @@
 
   </main>
 
-  <!-- 6. API Key 설정 팝업 모달 -->
-  <div id="apiKeyModal" class="modal-overlay">
-    <div class="modal-card">
-      <h3 class="modal-title">🔑 Google Gemini API 키 설정</h3>
-      <p class="modal-desc">구글 AI 스튜디오에서 발급받은 API 키를 입력하시면 실시간 생성형 AI 맞춤 분석을 사용할 수 있습니다.</p>
-      
-      <input type="text" id="modalApiKeyInput" class="api-key-input" placeholder="AIzaSy... 또는 발급받은 API 키 입력" />
-      
-      <div class="modal-help-box">
-        💡 <strong>무료 API 키 발급 방법 (1분):</strong><br/>
-        1. <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio (클릭)</a> 에 접속합니다.<br/>
-        2. <strong>'Create API key'</strong> 버튼을 클릭하여 새 키를 발급받으세요.<br/>
-        3. 발급받은 키를 여기에 붙여넣고 저장하면 즉시 적용됩니다!
-      </div>
-
-      <div class="modal-btn-group">
-        <button type="button" id="closeApiKeyModalBtn" class="btn-modal-cancel">취소</button>
-        <button type="button" id="saveApiKeyBtn" class="btn-modal-save">저장하기</button>
-      </div>
-    </div>
-  </div>
-
   <!-- 토스트 알림 메시지 -->
   <div id="toastMessage" class="toast-message">일기 내용을 먼저 입력해주세요!</div>
 
   <!-- ==========================================================================
-       [7. 자바스크립트 로직]
+       [6. 자바스크립트 로직]
        ========================================================================== -->
   <script>
     /* --------------------------------------------------------------------------
-       [A. Gemini API 키 관리 (기본값 및 로컬스토리지 저장 지원)]
+       [A. Google Gemini API 설정]
+       구글 AI 스튜디오 API 키입니다.
        -------------------------------------------------------------------------- */
-    const DEFAULT_GEMINI_API_KEY = "AQ.Ab8RN6IPJuu-o6Avt9UFvu7x7DwgZLRSs41aCwZxRPvGYIT8Tg";
-
-    function getActiveGeminiApiKey() {
-      return localStorage.getItem('user_gemini_api_key') || DEFAULT_GEMINI_API_KEY;
-    }
-
-    function setActiveGeminiApiKey(key) {
-      if (key && key.trim()) {
-        localStorage.setItem('user_gemini_api_key', key.trim());
-      } else {
-        localStorage.removeItem('user_gemini_api_key');
-      }
-    }
+    const GEMINI_API_KEY = "AQ.Ab8RN6IPJuu-o6Avt9UFvu7x7DwgZLRSs41aCwZxRPvGYIT8Tg";
 
     /* --------------------------------------------------------------------------
        [B. Firebase 초기화 및 Firestore DB 객체 생성]
@@ -902,13 +722,6 @@
     const savedItemsContainer = document.getElementById('savedItemsContainer');
     const refreshListBtn = document.getElementById('refreshListBtn');
 
-    // 모달 엘리먼트
-    const openApiKeyModalBtn = document.getElementById('openApiKeyModalBtn');
-    const closeApiKeyModalBtn = document.getElementById('closeApiKeyModalBtn');
-    const saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
-    const apiKeyModal = document.getElementById('apiKeyModal');
-    const modalApiKeyInput = document.getElementById('modalApiKeyInput');
-
     let currentAnalysisResult = null;
 
     /* --------------------------------------------------------------------------
@@ -930,31 +743,11 @@
       if (toastTimeout) clearTimeout(toastTimeout);
       toastTimeout = setTimeout(() => {
         toastMessage.classList.remove('show');
-      }, 4500);
+      }, 4000);
     }
 
     /* --------------------------------------------------------------------------
-       [F. API Key 모달 제어]
-       -------------------------------------------------------------------------- */
-    openApiKeyModalBtn.addEventListener('click', () => {
-      modalApiKeyInput.value = getActiveGeminiApiKey();
-      apiKeyModal.classList.add('open');
-      modalApiKeyInput.focus();
-    });
-
-    closeApiKeyModalBtn.addEventListener('click', () => {
-      apiKeyModal.classList.remove('open');
-    });
-
-    saveApiKeyBtn.addEventListener('click', () => {
-      const newKey = modalApiKeyInput.value.trim();
-      setActiveGeminiApiKey(newKey);
-      apiKeyModal.classList.remove('open');
-      showToast('API 키가 안전하게 저장되었습니다! ✨');
-    });
-
-    /* --------------------------------------------------------------------------
-       [G. Web Speech API 음성 인식]
+       [F. Web Speech API 음성 인식 구현]
        -------------------------------------------------------------------------- */
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let recognition = null;
@@ -991,7 +784,7 @@
       recognition.onerror = (event) => {
         console.error('음성 인식 오류:', event.error);
         if (event.error === 'not-allowed') {
-          showToast('마이크 사용 권한이 차단되었습니다. 브라우저 설정에서 마이크를 허용해주세요.');
+          showToast('마이크 사용 권한이 차단되었습니다. 브라우저 주소창 자물쇠 아이콘에서 허용해주세요.');
         }
         stopRecording();
       };
@@ -1031,7 +824,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       [H. 다채로운 스마트 로컬 감정 사전 (오프라인/API 오류 시 Fallback)]
+       [G. 다채로운 스마트 감정 분석 엔진 (다양한 맞춤 메시지 생성)]
        -------------------------------------------------------------------------- */
     const smartFallbackDictionary = [
       {
@@ -1095,11 +888,9 @@
     }
 
     /* --------------------------------------------------------------------------
-       [I. Google Gemini 생성형 AI 직접 호출 함수]
+       [H. Google Gemini 생성형 AI 직접 호출 함수]
        -------------------------------------------------------------------------- */
     async function requestGeminiAnalysis(diaryText) {
-      const apiKey = getActiveGeminiApiKey();
-
       const systemPrompt = `
 너는 일기를 읽고 사람들의 마음을 따뜻하게 안아주는 다정하고 지혜로운 AI 심리 상담사이자 가장 친한 친구야.
 사용자가 작성한 일기를 깊이 있게 읽고, 사용자가 겪은 구체적인 상황과 마음에 깊이 공감하여 감정을 섬세하게 분석해.
@@ -1121,20 +912,17 @@
 
       const userPrompt = `사용자의 오늘 일기:\n"""\n${diaryText}\n"""`;
 
-      // 최신 Gemini 모델 우선 호출 리스트
+      // 최신 Gemini 모델 순차 호출
       const modelsToTry = [
         'gemini-2.5-flash',
         'gemini-2.0-flash',
         'gemini-3.6-flash',
         'gemini-flash-latest'
       ];
-      
-      let lastErrorMessage = '';
-      let isAuthError = false;
 
       for (const modelName of modelsToTry) {
         try {
-          const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+          const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${GEMINI_API_KEY}`;
 
           const response = await fetch(geminiUrl, {
             method: 'POST',
@@ -1177,24 +965,13 @@
                 aiMessage: parsed.aiMessage || '오늘 하루도 정말 고생 많으셨어요.'
               };
             }
-          } else {
-            const errBody = await response.json().catch(() => ({}));
-            lastErrorMessage = errBody.error && errBody.error.message ? errBody.error.message : `HTTP ${response.status}`;
-            if (response.status === 401 || response.status === 403) {
-              isAuthError = true;
-              break;
-            }
           }
         } catch (err) {
-          lastErrorMessage = err.message;
+          console.warn(`모델 ${modelName} 호출 실패:`, err);
         }
       }
 
-      if (isAuthError) {
-        showToast('⚠️ 구글 Gemini API 키 인증에 실패했습니다. 상단의 [⚙️ API 키 설정]에서 새 키를 등록해주세요!');
-      }
-
-      console.warn('Gemini API 호출 실패로 스마트 사전 실행:', lastErrorMessage);
+      // API 호출이 어려울 때 스마트 감정 분석 엔진 가동
       return fallbackAnalyze(diaryText);
     }
 
@@ -1213,7 +990,7 @@
     }
 
     /* --------------------------------------------------------------------------
-       [J. '✨ AI 분석 요청하기' 버튼 이벤트]
+       [I. '✨ AI 분석 요청하기' 버튼 이벤트]
        -------------------------------------------------------------------------- */
     analyzeBtn.addEventListener('click', async () => {
       const text = diaryInput.value.trim();
@@ -1262,7 +1039,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       [K. '📝 새로 만들기' 버튼 이벤트]
+       [J. '📝 새로 만들기' 버튼 이벤트]
        -------------------------------------------------------------------------- */
     newBtn.addEventListener('click', () => {
       if (isRecording) stopRecording();
@@ -1285,7 +1062,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       [L. '💾 일기 저장하기' 버튼 이벤트 (Firebase Firestore 연동)]
+       [K. '💾 일기 저장하기' 버튼 이벤트 (Firebase Firestore 연동)]
        -------------------------------------------------------------------------- */
     saveBtn.addEventListener('click', async () => {
       const text = diaryInput.value.trim();
@@ -1370,7 +1147,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       [M. 저장된 일기 목록 불러오기]
+       [L. 저장된 일기 목록 불러오기]
        -------------------------------------------------------------------------- */
     async function loadRecentDiaries() {
       if (!db) return;
